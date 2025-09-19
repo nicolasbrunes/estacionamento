@@ -1,0 +1,21 @@
+# Dependências do Node
+node_modules/
+
+# Arquivo de variáveis de ambiente (NUNCA subir)
+.env
+
+# Bancos de dados locais
+*.db
+*.sqlite
+
+# Arquivos de backup ou exportação SQL
+*.sql
+
+# Logs do npm/yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sistema operacional (Windows/Mac)
+.DS_Store
+Thumbs.db

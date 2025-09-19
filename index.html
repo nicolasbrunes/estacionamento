@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cadastro de Veículos - FMP</title>
+        <style>
+        
+        :root {
+            --azul-escuro: #1D396C;
+            --rosa: #1D396C;
+            --roxo: #1D396C;
+            --azul-claro: #1D396C;
+            --verde: #1D396C;
+            --amarelo: #1D396C;
+            --vermelho: #E40F18;
+            --azul: #1D396C;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+
+        .header-image {
+    width: 100%;
+    height: 150px; 
+    display: flex;              
+    justify-content: center;    
+    align-items: center;        
+    overflow: hidden;
+    
+}
+
+.header-image img {
+    max-height: 100%;   
+    width: auto;       
+    display: block;
+}
+        
+        header {
+            background-color: #f8f9fa;
+            color: var(--azul-escuro);
+            padding: -100px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            font-weight: normal;
+        }
+        
+        .logo span {
+            font-weight: bold;
+            color: var(--azul-escuro);
+        }
+        
+      
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+        
+        .login-form {
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-form h2 {
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--azul-escuro);
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--azul-escuro);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(29, 57, 108, 0.2);
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--azul-escuro);
+            color: white;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            background-color: #15294e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(29, 57, 108, 0.3);
+        }
+        
+        .error-message {
+            color: var(--vermelho);
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        /* Dashboard styles */
+        .dashboard {
+            display: none;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .welcome-message {
+            color: var(--azul-escuro);
+        }
+        
+        .btn-logout {
+            background-color: var(--vermelho);
+            color: white;
+        }
+        
+        .btn-logout:hover {
+            background-color: #c30d15;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(228, 15, 24, 0.3);
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            padding-left: 40px;
+        }
+        
+        .search-box:before {
+            content: "🔍";
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--azul-escuro);
+        }
+        
+        .vehicles-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .vehicles-form h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1 1 200px;
+            margin-bottom: 0;
+        }
+        
+        .btn-submit {
+            background-color: var(--azul-escuro);
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            background-color: #15294e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(29, 57, 108, 0.3);
+        }
+        
+        .vehicles-list {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .vehicles-list h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+        
+        table th {
+            background-color: var(--azul-escuro);
+            color: white;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .action-buttons button {
+            margin-right: 5px;
+        }
+        
+        .btn-edit {
+            background-color: var(--azul-escuro);
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background-color: #15294e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(29, 57, 108, 0.3);
+        }
+        
+        .btn-delete {
+            background-color: var(--vermelho);
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background-color: #c30d15;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(228, 15, 24, 0.3);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .close-modal {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--azul-escuro);
+        }
+        
+        .close-modal:hover {
+            color: var(--vermelho);
+        }
+        
+        /* Status message */
+        .status-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        
+        .success {
+            background-color: rgba(29, 57, 108, 0.2);
+            color: var(--azul-escuro);
+        }
+        
+        .error {
+            background-color: rgba(228, 15, 24, 0.2);
+            color: #c30d15;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .form-row .form-group {
+                margin-bottom: 15px;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .btn-logout {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+   <header>
+    <div class="header-image">
+        <img src="C:\Users\NICOLAS\Desktop\estacionamento\Marca-FMP-3.webp" alt="Header FMP" height="120" >
+    </div>
+</header>
+
+    <main class="container">
+        <!-- Página de Login -->
+        <div id="login-page" class="login-container">
+            <div class="login-form">
+                <h2>Login Administrativo</h2>
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" placeholder="Digite seu usuário">
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="Digite sua senha">
+                </div>
+                <button class="btn btn-primary" id="login-btn">Entrar</button>
+                <div class="error-message" id="login-error">Usuário ou senha incorretos!</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Administrativo -->
+        <div id="dashboard" class="dashboard">
+            <div class="dashboard-header">
+                <h2 class="welcome-message">Bem-vindo, <span id="user-name">Administrador</span></h2>
+                <button class="btn btn-logout" id="logout-btn">Sair</button>
+            </div>
+
+            <div id="status-message" class="status-message"></div>
+
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Buscar veículo por placa...">
+            </div>
+
+            <div class="vehicles-form">
+                <h3>Cadastrar Novo Veículo</h3>
+                <form id="vehicle-form">
+                    <input type="hidden" id="vehicle-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="placa">Placa</label>
+                            <input type="text" id="placa" placeholder="Ex: ABC1D23" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modelo">Modelo</label>
+                            <input type="text" id="modelo" placeholder="Ex: Honda Civic" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cor">Cor</label>
+                            <input type="text" id="cor" placeholder="Ex: Preto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="proprietario">Proprietário</label>
+                            <input type="text" id="proprietario" placeholder="Nome do proprietário" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" id="telefone" placeholder="(00) 00000-0000" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-submit" id="submit-btn">Cadastrar Veículo</button>
+                </form>
+            </div>
+
+            <div class="vehicles-list">
+                <h3>Veículos Cadastrados</h3>
+                <table id="vehicles-table">
+                    <thead>
+                        <tr>
+                            <th>Placa</th>
+                            <th>Modelo</th>
+                            <th>Cor</th>
+                            <th>Proprietário</th>
+                            <th>Telefone</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Os veículos serão inseridos aqui via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <p>Tem certeza que deseja excluir o veículo de placa <strong id="delete-placa"></strong>?</p>
+            <div style="margin-top: 20px; text-align: right;">
+                <button class="btn" id="cancel-delete">Cancelar</button>
+                <button class="btn btn-delete" id="confirm-delete">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados de exemplo (simulando um banco de dados)
+        let vehicles = JSON.parse(localStorage.getItem('fmp_vehicles')) || [];
+        let currentEditId = null;
+        let currentDeleteId = null;
+
+        // Elementos da página de login
+        const loginPage = document.getElementById('login-page');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('login-btn');
+        const loginError = document.getElementById('login-error');
+
+        // Elementos do dashboard
+        const dashboard = document.getElementById('dashboard');
+        const logoutBtn = document.getElementById('logout-btn');
+        const searchInput = document.getElementById('search-input');
+        const vehicleForm = document.getElementById('vehicle-form');
+        const vehicleIdInput = document.getElementById('vehicle-id');
+        const placaInput = document.getElementById('placa');
+        const modeloInput = document.getElementById('modelo');
+        const corInput = document.getElementById('cor');
+        const proprietarioInput = document.getElementById('proprietario');
+        const telefoneInput = document.getElementById('telefone');
+        const submitBtn = document.getElementById('submit-btn');
+        const vehiclesTable = document.getElementById('vehicles-table').querySelector('tbody');
+        const userNameSpan = document.getElementById('user-name');
+        const statusMessage = document.getElementById('status-message');
+
+        // Elementos do modal de exclusão
+        const deleteModal = document.getElementById('delete-modal');
+        const deletePlacaSpan = document.getElementById('delete-placa');
+        const cancelDeleteBtn = document.getElementById('cancel-delete');
+        const confirmDeleteBtn = document.getElementById('confirm-delete');
+        const closeModalBtn = document.querySelector('.close-modal');
+
+        // Função para mostrar mensagem de status
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status-message ' + type;
+            statusMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Função para fazer login
+        function login() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (username === 'admin' && password === 'admin@@') {
+                // Login bem-sucedido
+                loginError.style.display = 'none';
+                loginPage.style.display = 'none';
+                dashboard.style.display = 'block';
+                userNameSpan.textContent = username;
+                
+                // Salvar estado de login (simulando sessão)
+                localStorage.setItem('fmp_logged_in', 'true');
+                
+                // Carregar veículos
+                renderVehicles();
+                
+                // Mostrar mensagem de boas-vindas
+                showStatus('Login realizado com sucesso!', 'success');
+            } else {
+                // Login falhou
+                loginError.style.display = 'block';
+            }
+        }
+
+        // Função para fazer logout
+        function logout() {
+            localStorage.removeItem('fmp_logged_in');
+            loginPage.style.display = 'flex';
+            dashboard.style.display = 'none';
+            usernameInput.value = '';
+            passwordInput.value = '';
+        }
+
+        // Função para renderizar a lista de veículos
+        function renderVehicles(filteredVehicles = null) {
+            const vehiclesToRender = filteredVehicles || vehicles;
+            vehiclesTable.innerHTML = '';
+            
+            if (vehiclesToRender.length === 0) {
+                vehiclesTable.innerHTML = '<tr><td colspan="6" style="text-align: center;">Nenhum veículo cadastrado</td></tr>';
+                return;
+            }
+            
+            vehiclesToRender.forEach(vehicle => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${vehicle.placa}</td>
+                    <td>${vehicle.modelo}</td>
+                    <td>${vehicle.cor}</td>
+                    <td>${vehicle.proprietario}</td>
+                    <td>${vehicle.telefone}</td>
+                    <td class="action-buttons">
+                        <button class="btn btn-edit" data-id="${vehicle.id}">Editar</button>
+                        <button class="btn btn-delete" data-id="${vehicle.id}">Excluir</button>
+                    </td>
+                `;
+                vehiclesTable.appendChild(row);
+            });
+            
+            // Adicionar event listeners aos botões de editar e excluir
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    editVehicle(id);
+                });
+            });
+            
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    showDeleteModal(id);
+                });
+            });
+        }
+
+        // Função para adicionar ou atualizar um veículo
+        function saveVehicle(e) {
+            e.preventDefault();
+            
+            const vehicle = {
+                placa: placaInput.value.trim(),
+                modelo: modeloInput.value.trim(),
+                cor: corInput.value.trim(),
+                proprietario: proprietarioInput.value.trim(),
+                telefone: telefoneInput.value.trim()
+            };
+            
+            // Validação básica
+            if (!vehicle.placa || !vehicle.modelo || !vehicle.cor || !vehicle.proprietario || !vehicle.telefone) {
+                showStatus('Por favor, preencha todos os campos.', 'error');
+                return;
+            }
+            
+            if (currentEditId) {
+                // Modo edição - atualizar veículo existente
+                vehicle.id = currentEditId;
+                const index = vehicles.findIndex(v => v.id === currentEditId);
+                if (index !== -1) {
+                    vehicles[index] = vehicle;
+                    showStatus('Veículo atualizado com sucesso!', 'success');
+                }
+                submitBtn.textContent = 'Cadastrar Veículo';
+                currentEditId = null;
+            } else {
+                // Verificar se a placa já existe
+                if (vehicles.some(v => v.placa === vehicle.placa)) {
+                    showStatus('Já existe um veículo cadastrado com esta placa.', 'error');
+                    return;
+                }
+                
+                // Modo adição - adicionar novo veículo
+                vehicle.id = Date.now().toString(); // ID simples baseado no timestamp
+                vehicles.push(vehicle);
+                showStatus('Veículo cadastrado com sucesso!', 'success');
+            }
+            
+            // Salvar no localStorage (simulando banco de dados)
+            localStorage.setItem('fmp_vehicles', JSON.stringify(vehicles));
+            
+            // Limpar o formulário e recarregar a lista
+            vehicleForm.reset();
+            vehicleIdInput.value = '';
+            renderVehicles();
+        }
+
+        // Função para editar um veículo
+        function editVehicle(id) {
+            const vehicle = vehicles.find(v => v.id === id);
+            if (vehicle) {
+                placaInput.value = vehicle.placa;
+                modeloInput.value = vehicle.modelo;
+                corInput.value = vehicle.cor;
+                proprietarioInput.value = vehicle.proprietario;
+                telefoneInput.value = vehicle.telefone;
+                vehicleIdInput.value = vehicle.id;
+                currentEditId = vehicle.id;
+                submitBtn.textContent = 'Atualizar Veículo';
+                
+                // Scroll para o formulário
+                vehicleForm.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Função para mostrar o modal de exclusão
+        function showDeleteModal(id) {
+            const vehicle = vehicles.find(v => v.id === id);
+            if (vehicle) {
+                deletePlacaSpan.textContent = vehicle.placa;
+                currentDeleteId = id;
+                deleteModal.style.display = 'flex';
+            }
+        }
+
+        // Função para excluir um veículo
+        function deleteVehicle() {
+            if (currentDeleteId) {
+                const vehicle = vehicles.find(v => v.id === currentDeleteId);
+                vehicles = vehicles.filter(v => v.id !== currentDeleteId);
+                localStorage.setItem('fmp_vehicles', JSON.stringify(vehicles));
+                renderVehicles();
+                closeDeleteModal();
+                showStatus(`Veículo com placa ${vehicle.placa} excluído com sucesso!`, 'success');
+            }
+        }
+
+        // Função para fechar o modal de exclusão
+        function closeDeleteModal() {
+            deleteModal.style.display = 'none';
+            currentDeleteId = null;
+        }
+
+        // Função para buscar veículos por placa
+        function searchVehicles() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            if (searchTerm === '') {
+                renderVehicles();
+                return;
+            }
+            
+            const filteredVehicles = vehicles.filter(vehicle => 
+                vehicle.placa.toLowerCase().includes(searchTerm)
+            );
+            
+            renderVehicles(filteredVehicles);
+        }
+
+        // Verificar se o usuário já está logado ao carregar a página
+        window.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('fmp_logged_in') === 'true';
+            
+            if (isLoggedIn) {
+                loginPage.style.display = 'none';
+                dashboard.style.display = 'block';
+                renderVehicles();
+            } else {
+                loginPage.style.display = 'flex';
+                dashboard.style.display = 'none';
+            }
+        });
+
+        // Event Listeners
+        loginBtn.addEventListener('click', login);
+        
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+        
+        logoutBtn.addEventListener('click', logout);
+        vehicleForm.addEventListener('submit', saveVehicle);
+        searchInput.addEventListener('input', searchVehicles);
+        cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+        confirmDeleteBtn.addEventListener('click', deleteVehicle);
+        closeModalBtn.addEventListener('click', closeDeleteModal);
+        
+        // Fechar o modal clicando fora dele
+        window.addEventListener('click', (e) => {
+            if (e.target === deleteModal) {
+                closeDeleteModal();
+            }
+        });
+    </script>
+</body>
+</html>
